@@ -3,10 +3,7 @@ require("dotenv").config();
 
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }).then(()=>console.log("DB CONNECTED"))
+  .connect(process.env.MONGODB_URI).then(()=>console.log("DB CONNECTED"))
 
 const phoneBookSchema = new mongoose.Schema({
   name: String,
