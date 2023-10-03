@@ -80,8 +80,6 @@ app.get("/api/persons/:id", (request, response) => {
 
 app.post("/api/persons", (req, res) => {
   const body = req.body;
-  console.log(typeof body.content);
-
   if (body.name.length < 1 || body.number < 1) {
     return res.status(400).json({ error: "Content Missing" });
   }
@@ -107,7 +105,7 @@ app.put("/api/persons/:id", (request, response, next) => {
       name: body.name,
       number: body.number,
     };
-    
+
     Person.findByIdAndUpdate(request.params.id, person, { new: true })
       .then((updatedPerson) => response.json(updatedPerson))
       .catch((error) => next(error));
