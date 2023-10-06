@@ -6,8 +6,20 @@ mongoose
   .connect(process.env.MONGODB_URI).then(()=>console.log("DB CONNECTED"))
 
 const phoneBookSchema = new mongoose.Schema({
-  name: String,
-  number: String,
+  name: {
+    type: String,
+    minLength: 3,
+  },
+  number: {
+    type: String,
+    minLength: 8,
+    validate: {
+      validator: (n) => {
+        return /^\d{2,3}-\d+$/.test(n)
+      },
+      message: props => `${props.value} is not a valid phone number`
+    }
+  },
 });
 
 phoneBookSchema.set("toJSON", {

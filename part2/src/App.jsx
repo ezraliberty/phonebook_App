@@ -33,7 +33,7 @@ const Persons = ({ persons, deleteUser }) => (
 );
 
 const ErrorModal = ({ message, passed }) => {
-  if (message === null ) {
+  if (message === null) {
     return null;
   }
 
@@ -70,6 +70,11 @@ const App = () => {
     if (window.confirm(`Delete ${name.name} ?`)) {
       everyHandle.remove(name.id).then(() => {
         setPersons(persons.filter((p) => p.id !== name.id));
+        setPassed(true);
+        setErrorName(`Delete ${name.name} Successful`);
+        setTimeout(() => {
+          setErrorName(null);
+        }, 5000);
       });
     }
   };
@@ -115,22 +120,29 @@ const App = () => {
             })
             .catch((error) => {
               setPassed(false);
-              setErrorName(
-                `Details of ${updatedField.name} has already been removed from the server`
-              );
+              setErrorName(`${error.response.data.error}`);
               setTimeout(() => {
                 setErrorName(null);
               }, 5000);
             });
         }
       } else {
-        everyHandle.create(newPerson).then((updatedPerson) => {
-          setErrorName(`Added ${updatedPerson.name}`);
-          setTimeout(() => {
-            setErrorName(null);
-          }, 5000);
-          setPersons(persons.concat(updatedPerson));
-        });
+        everyHandle
+          .create(newPerson)
+          .then((updatedPerson) => {
+            setErrorName(`Added ${updatedPerson.name}`);
+            setTimeout(() => {
+              setErrorName(null);
+            }, 5000);
+            setPersons(persons.concat(updatedPerson));
+          })
+          .catch((error) => {
+            setPassed(false);
+            setErrorName(`${error.response.data.error}`);
+            setTimeout(() => {
+              setErrorName(null);
+            }, 5000);
+          });
       }
     };
 

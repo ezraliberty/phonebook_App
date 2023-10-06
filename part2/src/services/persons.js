@@ -3,9 +3,9 @@ const baseUrl = "/api/persons";
 // const baseUrl = "http://localhost:3001/api/persons";
 
 const everyOne = () => {
-    const request = axios.get(baseUrl)
-    return request.then(response => response.data)
-}
+  const request = axios.get(baseUrl);
+  return request.then((response) => response.data);
+};
 
 const create = (newPerson) => {
   const request = axios.post(baseUrl, newPerson);
@@ -18,8 +18,8 @@ const update = (id, newPerson) => {
 };
 
 const remove = (id) => {
-    const request = axios.delete(`${baseUrl}/${id}`);
-    return request
-}
+  const request = axios.delete(`${baseUrl}/${id}`);
+  return request.then((response) => response.data);
+};
 
-export default {everyOne, create, update, remove}
+export default { everyOne, create, update, remove };
