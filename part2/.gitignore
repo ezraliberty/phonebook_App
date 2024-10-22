@@ -25,6 +25,7 @@ rps.py
 *.njsproj
 *.sln
 *.sw?
+.env
 
 
 
